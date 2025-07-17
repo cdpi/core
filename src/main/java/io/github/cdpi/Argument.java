@@ -5,15 +5,15 @@ import io.github.cdpi.exceptions.NullArgumentException;
 /**
  * <h1>Argument</h1>
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 0.3.0
+ * @since 0.3.0
  */
 public class Argument
 	{
 	/**
 	 * @throws NullArgumentException
 	 * 
-	 * @since 0.1.0
+	 * @since 0.3.0
 	 */
 	public static final <T> T notNull(final T value)
 		{
