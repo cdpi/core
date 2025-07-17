@@ -6,6 +6,7 @@ package io.github.cdpi.exceptions;
  * @version 0.1.0
  * @since 0.1.0
  */
+@Deprecated // Pas sous cette forme...
 public class UncheckedException extends RuntimeException
 	{
 	/**
