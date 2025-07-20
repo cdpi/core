@@ -1,6 +1,10 @@
 
 target/
 
+# DEV SIGNATURE
+*.sig
+*.key
+
 # Compiled class file
 *.class
 
