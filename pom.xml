@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.cdpi</groupId>
 	<artifactId>core</artifactId>
-	<version>0.6.0</version>
+	<version>0.6.1</version>
 	<name>Core</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
