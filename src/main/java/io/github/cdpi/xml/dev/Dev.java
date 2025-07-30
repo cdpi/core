@@ -1,11 +1,10 @@
 package io.github.cdpi.xml.dev;
 
-import org.w3c.dom.Text;
-
 public class Dev
 	{
 	static void nodeHandler()
 		{
+		/*
 		final var printText = new TextAction()
 			{
 			@Override
@@ -25,6 +24,7 @@ public class Dev
 			};
 
 		textNodeHandler.accept(null, printText);
+		*/
 		}
 
 	public static void main(String[] args)
