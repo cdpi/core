@@ -30,10 +30,14 @@ public class AverageColor extends AbstractFilter<Color>
 		}
 
 	/**
+	 * @throws NullArgumentException
+	 * 
 	 * @since 0.11.0
 	 */
 	public static final Color getAverageColor(final BufferedImage image)
 		{
+		Argument.notNull(image);
+
 		final var consumer = new AverageColorConsumer();
 
 		Image.walk(image, consumer);

@@ -18,6 +18,12 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 	{
 	protected final BufferedImage image;
 
+	@SuppressWarnings("unused")
+	private AbstractImage()
+		{
+		throw new UnsupportedOperationException();
+		}
+
 	/**
 	 * @throws NullArgumentException
 	 * 
