@@ -3,10 +3,9 @@ package io.github.cdpi.image.filter;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.util.function.Consumer;
-
-import org.apache.commons.lang3.NotImplementedException;
-
-import image.Image;
+import io.github.cdpi.Argument;
+import io.github.cdpi.exceptions.NullArgumentException;
+import io.github.cdpi.image.Image;
 import io.github.cdpi.image.ImageInterface;
 
 /**
@@ -14,37 +13,39 @@ import io.github.cdpi.image.ImageInterface;
  * 
  * https://stackoverflow.com/a/28162725
  * 
- * @version 0.10.0
- * @since 0.10.0
+ * @version 0.11.0
+ * @since 0.11.0
  */
 public class AverageColor extends AbstractFilter<Color>
 	{
 	/**
-	 * @since 0.10.0
+	 * @throws NullArgumentException
+	 * 
+	 * @since 0.11.0
 	 */
 	@Override
 	public final Color apply(final ImageInterface<?> image)
 		{
-		return getAverageColor(image.getBufferedImage());
+		return getAverageColor(Argument.notNull(image).getBufferedImage());
 		}
 
 	/**
-	 * @since 0.10.0
+	 * @since 0.11.0
 	 */
 	public static final Color getAverageColor(final BufferedImage image)
 		{
 		final var consumer = new AverageColorConsumer();
 
-		//Image.walk(image, consumer);
-		//return consumer.getAverageColor();
-		throw new NotImplementedException();
+		Image.walk(image, consumer);
+
+		return consumer.getAverageColor();
 		}
 
 	/**
 	 * <h1>AverageColor.AverageColorConsumer</h1>
 	 * 
-	 * @version 0.10.0
-	 * @since 0.10.0
+	 * @version 0.11.0
+	 * @since 0.11.0
 	 */
 	public static class AverageColorConsumer implements Consumer<Color>
 		{
@@ -54,7 +55,7 @@ public class AverageColor extends AbstractFilter<Color>
 		private long blue = 0;
 
 		/**
-		 * @since 0.10.0
+		 * @since 0.11.0
 		 */
 		@Override
 		public void accept(final Color color)
@@ -67,7 +68,7 @@ public class AverageColor extends AbstractFilter<Color>
 			}
 
 		/**
-		 * @since 0.10.0
+		 * @since 0.11.0
 		 */
 		public Color getAverageColor()
 			{

@@ -1,11 +1,8 @@
-package image;
-
-import java.io.IOException;
-import java.nio.file.Path;
-//import image.filter.Pixelate;
+package io.github.cdpi.image;
 
 public class Dev
 	{
+	/*
 	public static void pixelate() throws IOException
 		{
 		final var image = new Image("../all-in-one/tests/plage.jpg");
@@ -26,4 +23,5 @@ public class Dev
 			ex.printStackTrace();
 			}
 		}
+	*/
 	}

@@ -11,7 +11,8 @@ import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.imageio.stream.ImageOutputStream;
-import image.exceptions.UnsupportedImageException;
+
+import io.github.cdpi.image.exceptions.UnsupportedImageException;
 
 /**
  * <h1>IO</h1>

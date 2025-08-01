@@ -1,38 +1,37 @@
-package image;
+package io.github.cdpi.image;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import org.apache.commons.lang3.NotImplementedException;
-//import image.filter.FilterInterface;
-import io.github.cdpi.image.IO;
-import io.github.cdpi.image.ImageInterface;
+import io.github.cdpi.Argument;
+import io.github.cdpi.exceptions.NullArgumentException;
 
 /**
- * <h2>AbstractImage</h2>
+ * <h1>AbstractImage</h1>
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 0.11.0
+ * @since 0.11.0
  */
 public abstract class AbstractImage<T extends AbstractImage<T>> extends IO implements ImageInterface<T>
 	{
 	protected final BufferedImage image;
 
 	/**
-	 * @since 0.1.0
+	 * @throws NullArgumentException
+	 * 
+	 * @since 0.11.0
 	 */
 	protected AbstractImage(final BufferedImage image)
 		{
 		super();
 
-		this.image = image;
+		this.image = Argument.notNull(image);
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @since 0.11.0
 	 */
 	@Override
 	public final BufferedImage getBufferedImage()
@@ -41,7 +40,7 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @since 0.11.0
 	 */
 	@Override
 	public T crop(int x, int y, int width, int height)
@@ -51,7 +50,7 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @since 0.11.0
 	 */
 	@Override
 	public final void fill(final Color color)
@@ -60,7 +59,7 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @since 0.11.0
 	 */
 	/*
 	@Override
@@ -70,19 +69,16 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 	*/
 
-	/**
-	 * @throws IOException
-	 * 
-	 * @since 0.1.0
-	 */
+	/*
 	@Override
 	public final void write(final Path path, final String format) throws IOException
 		{
 		write(image, format, path);
 		}
+	*/
 
 	/**
-	 * @since 0.1.0
+	 * @since 0.11.0
 	 */
 	public static final BufferedImage crop(final BufferedImage image, int x, int y, int width, int height)
 		{
@@ -97,7 +93,7 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @since 0.11.0
 	 */
 	public static final void draw(final BufferedImage source, final BufferedImage destination)
 		{
@@ -114,13 +110,18 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @throws NullArgumentException
+	 * 
+	 * @since 0.11.0
 	 */
 	public static final void fill(final BufferedImage image, final Color color)
 		{
-		final var rgb = color.getRGB();
+		Argument.notNull(image);
+		Argument.notNull(color);
+
 		final var width = image.getWidth();
 		final var height = image.getHeight();
+		final var rgb = color.getRGB();
 
 		// TODO: BiIntConsumer (x,y)
 		/*
@@ -139,10 +140,15 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @throws NullArgumentException
+	 * 
+	 * @since 0.11.0
 	 */
 	public static final void walk(final BufferedImage image, final IntConsumer consumer)
 		{
+		Argument.notNull(image);
+		Argument.notNull(consumer);
+
 		final var width = image.getWidth();
 		final var height = image.getHeight();
 
@@ -156,10 +162,14 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.1.0
+	 * @throws NullArgumentException
+	 * 
+	 * @since 0.11.0
 	 */
 	public static final void walk(final BufferedImage image, final Consumer<Color> consumer)
 		{
+		Argument.notNull(consumer);
+
 		walk(image, (IntConsumer) pixel ->
 			{
 			consumer.accept(new Color(pixel));

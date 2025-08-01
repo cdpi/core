@@ -1,27 +1,27 @@
-package image.format;
+package io.github.cdpi.image.format;
 
 import java.awt.image.RenderedImage;
 import java.io.IOException;
 import java.nio.file.Path;
-
-import io.github.cdpi.image.IO;
+import org.apache.commons.lang3.NotImplementedException;
 
 /**
- * <h2>TaggedImageFileFormat</h2>
+ * <h1>TaggedImageFileFormat</h1>
  * 
- * @version 0.1.0
- * @since 0.1.0
+ * @version 0.11.0
+ * @since 0.11.0
  */
 public class TaggedImageFileFormat
 	{
 	/**
 	 * @throws IOException
 	 * 
-	 * @since 0.1.0
+	 * @since 0.11.0
 	 */
 	public static final void save(final Path path, final RenderedImage image) throws IOException
 		{
-		IO.write(image, "TIFF", path);
+		//IO.write(image, "TIFF", path);
+		throw new NotImplementedException();
 		}
 	}
 

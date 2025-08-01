@@ -1,11 +1,8 @@
 package io.github.cdpi.image.filter;
 
 import java.awt.image.BufferedImage;
-
-import org.apache.commons.lang3.NotImplementedException;
-
-import image.ColorDifference;
-import image.Image;
+import io.github.cdpi.image.ColorDifference;
+import io.github.cdpi.image.Image;
 import io.github.cdpi.image.ImageInterface;
 import java.awt.Color;
 
@@ -94,7 +91,6 @@ public class Pixelate extends AbstractFilter<BufferedImage>
 	 */
 	private final BufferedImage line(final BufferedImage image)
 		{
-		/*
 		final var width = image.getWidth();
 		final var height = image.getHeight();
 
@@ -134,7 +130,5 @@ public class Pixelate extends AbstractFilter<BufferedImage>
 			}
 
 		return newImage;
-		*/
-		throw new NotImplementedException();
 		}
 	}
