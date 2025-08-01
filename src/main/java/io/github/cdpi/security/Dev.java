@@ -1,4 +1,4 @@
-package io.github.cdpi;
+package io.github.cdpi.security;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -11,7 +11,7 @@ public class Dev
 		{
 		try
 			{
-			final var generator = new AliceBob();
+			final var generator = new Alice();
 
 			generator.generate((publicKey, privateKey) ->
 				{
@@ -29,7 +29,7 @@ public class Dev
 		{
 		try
 			{
-			final var bob = new AliceBob();
+			final var bob = new Bob();
 
 			final var key = bob.readPrivateKey(privateKeyPath);
 
@@ -49,7 +49,7 @@ public class Dev
 		{
 		try
 			{
-			final var alice = new AliceBob();
+			final var alice = new Alice();
 
 			final var key = alice.readPublicKey(publicKeyPath);
 
@@ -68,16 +68,11 @@ public class Dev
 
 	public static void main(String[] args)
 		{
-		//keys("public.key", "private.key");
-		//sign("pom.xml", "private.key");
-		verify("pom.xml", "pom.xml.sig", "public.key");
+		//keys("alice-public.key", "alice-private.key");
+		//keys("bob-public.key", "bob-private.key");
 
-		/*
-		try {
-			new AliceBob().readPublicKey("public.key");
-			System.out.println(233);
-		} catch (Exception e) {
-		}
-		*/
+		//sign("pom.xml", "bob-private.key");
+
+		//verify("pom.xml", "pom.xml.sig", "bob-public.key");
 		}
 	}

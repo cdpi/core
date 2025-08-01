@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 import org.apache.commons.lang3.exception.UncheckedException;
 import io.github.cdpi.Argument;
+import io.github.cdpi.annotations.CodeByCopilot;
 import io.github.cdpi.exceptions.NullArgumentException;
 
 /**
@@ -24,6 +25,8 @@ public final class NameBasedSHA1
 	 */
 	public static enum Namespace
 		{
+		DNS(UUID.fromString("6ba7b810-9dad-11d1-80b4-00c04fd430c8")),
+		URL(UUID.fromString("6ba7b811-9dad-11d1-80b4-00c04fd430c8")),
 		OID(UUID.fromString("6ba7b812-9dad-11d1-80b4-00c04fd430c8"))
 
 		/*
@@ -78,12 +81,13 @@ public final class NameBasedSHA1
 	/**
 	 * @throws NullArgumentException
 	 * 
+	 * Généré par Copilot que j'ai modifié un peu
+	 * 
 	 * @since 0.3.0
 	 */
+	@CodeByCopilot
 	public UUID generate(final UUID uuid, final String name)
 		{
-		// Généré par Copilot que j'ai modifié un peu
-
 		Argument.notNull(uuid);
 		Argument.notNull(name);
 
@@ -103,9 +107,18 @@ public final class NameBasedSHA1
 		hash[8] |= 0x80;
 
 		long msb = 0;
+
+		for (int i = 0; i < 8; i++)
+			{
+			msb = (msb << 8) | (hash[i] & 0xff);
+			}
+
 		long lsb = 0;
-		for (int i = 0; i < 8; i++) msb = (msb << 8) | (hash[i] & 0xff);
-		for (int i = 8; i < 16; i++) lsb = (lsb << 8) | (hash[i] & 0xff);
+
+		for (int i = 8; i < 16; i++)
+			{
+			lsb = (lsb << 8) | (hash[i] & 0xff);
+			}
 
 		return new UUID(msb, lsb);
 		}
@@ -121,12 +134,13 @@ public final class NameBasedSHA1
 		}
 
 	/**
+	 * Généré par Copilot que j'ai modifié un peu
+	 * 
 	 * @since 0.3.0
 	 */
+	@CodeByCopilot
 	private byte[] toBytes(final UUID uuid)
 		{
-		// Généré par Copilot que j'ai modifié un peu
-
 		final var msb = uuid.getMostSignificantBits();
 		final var lsb = uuid.getLeastSignificantBits();
 
