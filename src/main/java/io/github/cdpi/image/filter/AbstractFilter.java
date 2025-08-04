@@ -1,7 +1,7 @@
 package io.github.cdpi.image.filter;
 
 import java.util.function.Function;
-import io.github.cdpi.image.ImageInterface;
+import io.github.cdpi.image.IImage;
 
 /**
  * <h1>AbstractFilter</h1>
@@ -9,6 +9,6 @@ import io.github.cdpi.image.ImageInterface;
  * @version 0.11.0
  * @since 0.11.0
  */
-public abstract class AbstractFilter<T> implements Function<ImageInterface<?>, T>
+public abstract class AbstractFilter<R> implements Function<IImage<?>, R>
 	{
 	}

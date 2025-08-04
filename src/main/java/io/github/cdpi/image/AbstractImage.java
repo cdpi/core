@@ -1,10 +1,8 @@
 package io.github.cdpi.image;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
-import java.util.function.Consumer;
-import java.util.function.IntConsumer;
-import org.apache.commons.lang3.NotImplementedException;
 import io.github.cdpi.Argument;
 import io.github.cdpi.exceptions.NullArgumentException;
 
@@ -14,15 +12,9 @@ import io.github.cdpi.exceptions.NullArgumentException;
  * @version 0.11.0
  * @since 0.11.0
  */
-public abstract class AbstractImage<T extends AbstractImage<T>> extends IO implements ImageInterface<T>
+public abstract class AbstractImage<T extends AbstractImage<T>> extends IO implements IImage<T>
 	{
 	protected final BufferedImage image;
-
-	@SuppressWarnings("unused")
-	private AbstractImage()
-		{
-		throw new UnsupportedOperationException();
-		}
 
 	/**
 	 * @throws NullArgumentException
@@ -46,13 +38,14 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
+	 * @throws NullArgumentException
+	 * 
 	 * @since 0.11.0
 	 */
 	@Override
-	public T crop(int x, int y, int width, int height)
+	public final BufferedImage crop(int x, int y, int width, int height)
 		{
-		//return new Image(crop(image, x, y, width, height));
-		throw new NotImplementedException("AbstractImage.crop(int, int, int, int)");
+		return crop(image, x, y, width, height);
 		}
 
 	/**
@@ -65,44 +58,57 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 		}
 
 	/**
-	 * @since 0.11.0
-	 */
-	/*
-	@Override
-	public final <R> R filter(final FilterInterface<R> filter)
-		{
-		return filter.apply(this);
-		}
-	*/
-
-	/*
-	@Override
-	public final void write(final Path path, final String format) throws IOException
-		{
-		write(image, format, path);
-		}
-	*/
-
-	/**
+	 * @throws NullArgumentException
+	 * 
 	 * @since 0.11.0
 	 */
 	public static final BufferedImage crop(final BufferedImage image, int x, int y, int width, int height)
 		{
-		if (x < 0) x = 0;
-		if (y < 0) y = 0;
-		if (x > image.getWidth()) x = image.getWidth();
-		if (y > image.getHeight()) y = image.getHeight();
-		if (x + width > image.getWidth()) width = image.getWidth() - x;
-		if (y + height > image.getHeight()) height = image.getHeight() - y;
+		Argument.notNull(image);
+
+		if (x < 0)
+			{
+			x = 0;
+			}
+
+		if (y < 0)
+			{
+			y = 0;
+			}
+
+		if (x > image.getWidth())
+			{
+			x = image.getWidth();
+			}
+
+		if (y > image.getHeight())
+			{
+			y = image.getHeight();
+			}
+
+		if (x + width > image.getWidth())
+			{
+			width = image.getWidth() - x;
+			}
+
+		if (y + height > image.getHeight())
+			{
+			height = image.getHeight() - y;
+			}
 
 		return image.getSubimage(x, y, width, height);
 		}
 
 	/**
+	 * @throws NullArgumentException
+	 * 
 	 * @since 0.11.0
 	 */
 	public static final void draw(final BufferedImage source, final BufferedImage destination)
 		{
+		Argument.notNull(source);
+		Argument.notNull(destination);
+
 		final var graphics = destination.getGraphics();
 
 		try
@@ -150,7 +156,7 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 	 * 
 	 * @since 0.11.0
 	 */
-	public static final void walk(final BufferedImage image, final IntConsumer consumer)
+	public static final void walk(final BufferedImage image, final IPixelConsumer consumer)
 		{
 		Argument.notNull(image);
 		Argument.notNull(consumer);
@@ -162,7 +168,7 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 			{
 			for (var y = 0; y < height; y++)
 				{
-				consumer.accept(image.getRGB(x, y));
+				consumer.accept(x, y, image.getRGB(x, y));
 				}
 			}
 		}
@@ -172,13 +178,13 @@ public abstract class AbstractImage<T extends AbstractImage<T>> extends IO imple
 	 * 
 	 * @since 0.11.0
 	 */
-	public static final void walk(final BufferedImage image, final Consumer<Color> consumer)
+	public static final void walk(final BufferedImage image, final IColorConsumer consumer)
 		{
 		Argument.notNull(consumer);
 
-		walk(image, (IntConsumer) pixel ->
+		walk(image, (x, y, pixel) ->
 			{
-			consumer.accept(new Color(pixel));
+			consumer.accept(new Point(x, y), new Color(pixel));
 			});
 		}
 	}

@@ -83,12 +83,16 @@ public class IO
 		}
 
 	/**
+	 * @throws NullArgumentException
 	 * @throws IOException
+	 * @throws UnsupportedImageException
 	 * 
-	 * @since 0.10.0
+	 * @since 0.11.0
 	 */
-	public static final void write(final RenderedImage image, final String format, final Path path) throws IOException
+	public static final void write(final RenderedImage image, final Format format, final Path path) throws IOException
 		{
+		Argument.notNull(path);
+
 		try (final var output = new FileImageOutputStream(path.toFile()))
 			{
 			write(image, format, output);
@@ -96,13 +100,19 @@ public class IO
 		}
 
 	/**
+	 * @throws NullArgumentException
 	 * @throws IOException
+	 * @throws UnsupportedImageException
 	 * 
-	 * @since 0.10.0
+	 * @since 0.11.0
 	 */
-	public static final void write(final RenderedImage image, final String format, final ImageOutputStream output) throws IOException
+	public static final void write(final RenderedImage image, final Format format, final ImageOutputStream output) throws IOException
 		{
-		if (!ImageIO.write(image, format, output))
+		Argument.notNull(image);
+		Argument.notNull(format);
+		Argument.notNull(output);
+
+		if (!ImageIO.write(image, format.name(), output))
 			{
 			throw new UnsupportedImageException();
 			}
