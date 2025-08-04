@@ -11,17 +11,16 @@ public class Dev
 
 		//Image.write(pixelate, "JPEG", Path.of("../all-in-one/tests/plage-pixelate2aaaaaaaa.jpeg"));
 		}
+	*/
 
 	public static void main(String[] args)
 		{
 		try
 			{
-			pixelate();
 			}
 		catch (final Throwable ex)
 			{
 			ex.printStackTrace();
 			}
 		}
-	*/
 	}

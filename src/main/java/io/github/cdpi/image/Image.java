@@ -2,23 +2,18 @@ package io.github.cdpi.image;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.file.Path;
-import javax.imageio.ImageIO;
-import org.apache.commons.lang3.NotImplementedException;
 import io.github.cdpi.Argument;
-import io.github.cdpi.annotations.WorkInProgress;
 import io.github.cdpi.exceptions.NullArgumentException;
 import io.github.cdpi.image.filter.AbstractFilter;
+import io.github.cdpi.image.filter.AverageColor;
 
 /**
  * <h1>Image</h1>
  * 
  * @version 0.11.0
- * @since 0.1.0
+ * @since 0.11.0
  */
 public class Image extends AbstractImage<Image>
 	{
@@ -32,51 +27,38 @@ public class Image extends AbstractImage<Image>
 		super(image);
 		}
 
-	/**
-	 * @throws NullArgumentException
-	 * @throws IOException 
-	 * @throws UnsupportedOperationException
-	 * 
-	 * @since 0.1.0
-	 */
+	/*
 	public Image(final File file) throws IOException
 		{
 		this(read(file));
 		}
+	*/
 
-	/**
-	 * @throws IOException 
-	 * @throws UnsupportedOperationException
-	 * 
-	 * @since 0.1.0
-	 */
+	/*
 	public Image(final Path path) throws IOException
 		{
 		// TODO: NotNull
 		this(path.toFile());
 		}
+	*/
 
-	/**
-	 * @throws IOException 
-	 * @throws UnsupportedOperationException
-	 * 
-	 * @since 0.1.0
-	 */
+	/*
 	public Image(final String path) throws IOException
 		{
 		this(new File(path));
 		}
+	*/
 
 	/**
 	 * @since 0.11.0
 	 */
-	@WorkInProgress
 	public Color getAverageColor()
 		{
+		// Les 2 OK
 		//new AverageColor().apply(this);
-		//walk(image, new AverageColor.AverageColorConsumer());
+		//AverageColor.getAverageColor(this.image);
 
-		throw new NotImplementedException("Image.getAverageColor()");
+		return AverageColor.getAverageColor(image);
 		}
 
 	/**
@@ -105,33 +87,15 @@ public class Image extends AbstractImage<Image>
 		}
 	*/
 
-	/**
-	 * @throws IOException
-	 * 
-	 * @since 0.1.0
-	 */
+	@Deprecated
 	public static final BufferedImage from(final byte[] bytes) throws IOException
 		{
-		try (final var input = new ByteArrayInputStream(bytes))
-			{
-			return ImageIO.read(input);
-			}
+		throw new UnsupportedOperationException();
 		}
 
-	/**
-	 * @throws IOException
-	 * 
-	 * @since 0.1.0
-	 */
+	@Deprecated
 	public static final BufferedImage from(final ByteBuffer buffer) throws IOException
 		{
-		/*
-		if (buffer.hasArray())
-			{
-			return from(buffer.array());
-			}
-		*/
-
-		return from(buffer.array());
+		throw new UnsupportedOperationException();
 		}
 	}

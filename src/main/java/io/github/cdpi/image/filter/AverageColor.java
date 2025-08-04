@@ -2,11 +2,11 @@ package io.github.cdpi.image.filter;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;
-import java.util.function.Consumer;
+import java.awt.Point;
 import io.github.cdpi.Argument;
 import io.github.cdpi.exceptions.NullArgumentException;
+import io.github.cdpi.image.IImage;
 import io.github.cdpi.image.Image;
-import io.github.cdpi.image.ImageInterface;
 
 /**
  * <h1>Average</h1>
@@ -24,16 +24,20 @@ public class AverageColor extends AbstractFilter<Color>
 	 * @since 0.11.0
 	 */
 	@Override
-	public final Color apply(final ImageInterface<?> image)
+	public final Color apply(final IImage<?> image)
 		{
 		return getAverageColor(Argument.notNull(image).getBufferedImage());
 		}
 
 	/**
+	 * @throws NullArgumentException
+	 * 
 	 * @since 0.11.0
 	 */
 	public static final Color getAverageColor(final BufferedImage image)
 		{
+		Argument.notNull(image);
+
 		final var consumer = new AverageColorConsumer();
 
 		Image.walk(image, consumer);
@@ -47,7 +51,7 @@ public class AverageColor extends AbstractFilter<Color>
 	 * @version 0.11.0
 	 * @since 0.11.0
 	 */
-	public static class AverageColorConsumer implements Consumer<Color>
+	public static class AverageColorConsumer implements IImage.IColorConsumer
 		{
 		private long count = 0;
 		private long red = 0;
@@ -58,7 +62,7 @@ public class AverageColor extends AbstractFilter<Color>
 		 * @since 0.11.0
 		 */
 		@Override
-		public void accept(final Color color)
+		public void accept(final Point point, final Color color)
 			{
 			count++;
 

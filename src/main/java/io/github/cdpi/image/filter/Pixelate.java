@@ -2,8 +2,8 @@ package io.github.cdpi.image.filter;
 
 import java.awt.image.BufferedImage;
 import io.github.cdpi.image.ColorDifference;
+import io.github.cdpi.image.IImage;
 import io.github.cdpi.image.Image;
-import io.github.cdpi.image.ImageInterface;
 import java.awt.Color;
 
 /**
@@ -68,7 +68,7 @@ public class Pixelate extends AbstractFilter<BufferedImage>
 	 * @since 0.10.0
 	 */
 	@Override
-	public final BufferedImage apply(final ImageInterface<?> image)
+	public final BufferedImage apply(final IImage<?> image)
 		{
 		switch (mode)
 			{
