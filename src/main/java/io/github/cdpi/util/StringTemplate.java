@@ -29,6 +29,7 @@ public class StringTemplate
 	 * 
 	 * @since 0.8.0
 	 */
+	@Deprecated // Ne supporte pas {{}}, (),... comme délimiteurs dans RegEx
 	public StringTemplate(final String startDelimiter, final String endDelimiter)
 		{
 		super();
@@ -42,6 +43,7 @@ public class StringTemplate
 	/**
 	 * @since 0.8.0
 	 */
+	@Deprecated // Ne supporte pas {{}}, (),... comme délimiteurs dans RegEx
 	public StringTemplate(final char startDelimiter, final char endDelimiter)
 		{
 		this(String.valueOf(startDelimiter), String.valueOf(endDelimiter));

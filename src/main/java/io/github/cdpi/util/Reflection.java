@@ -7,6 +7,9 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.IntPredicate;
+
+import org.apache.commons.lang3.NotImplementedException;
+
 import io.github.cdpi.Argument;
 import io.github.cdpi.exceptions.NullArgumentException;
 
@@ -18,10 +21,10 @@ import io.github.cdpi.exceptions.NullArgumentException;
  */
 public class Reflection
 	{
+	public static final IntPredicate FINAL = Modifier::isFinal;
 	public static final IntPredicate PRIVATE = Modifier::isPrivate;
 	public static final IntPredicate PROTECTED = Modifier::isProtected;
 	public static final IntPredicate PUBLIC = Modifier::isPublic;
-
 	public static final IntPredicate STATIC = Modifier::isStatic;
 
 	/**
@@ -40,6 +43,7 @@ public class Reflection
 	 */
 	public static final Map<String, Object> getDeclaredFields(final Object object, final IntPredicate modifiers) throws ReflectiveOperationException
 		{
+		/*
 		Argument.notNull(modifiers);
 
 		final var clazz = Argument.notNull(object).getClass();
@@ -55,6 +59,10 @@ public class Reflection
 			}
 
 		return fields;
+		*/
+
+		// TODO: IntPredicate Bug
+		throw new NotImplementedException();
 		}
 
 	/**

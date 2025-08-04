@@ -13,7 +13,7 @@ import io.github.cdpi.image.Image;
 /**
  * <h1>API</h1>
  * 
- * @version 0.7.0
+ * @version 0.12.0
  * @since 0.1.0
  */
 public class API
@@ -26,9 +26,6 @@ public class API
 	public API(final Level log)
 		{
 		super();
-
-		// Désactive les logs d'Apache HttpClient
-		// Logger.getLogger("org.apache.http").setLevel(Level.OFF);
 
 		Logger.getLogger("org.apache.http").setLevel(Argument.notNull(log));
 		}
@@ -68,7 +65,7 @@ public class API
 	 */
 	public final BufferedImage getAsImage(final String url) throws IOException
 		{
-		return Image.from(getAsBytes(url));
+		return Image.read(getAsBytes(url));
 		}
 
 	/**
@@ -78,7 +75,7 @@ public class API
 	 */
 	public final BufferedImage getAsImage(final URI uri) throws IOException
 		{
-		return Image.from(getAsBytes(uri));
+		return Image.read(getAsBytes(uri));
 		}
 
 	/**
