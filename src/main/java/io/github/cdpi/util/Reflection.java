@@ -7,9 +7,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.IntPredicate;
-
-import org.apache.commons.lang3.NotImplementedException;
-
 import io.github.cdpi.Argument;
 import io.github.cdpi.exceptions.NullArgumentException;
 
@@ -43,8 +40,13 @@ public class Reflection
 	 */
 	public static final Map<String, Object> getDeclaredFields(final Object object, final IntPredicate modifiers) throws ReflectiveOperationException
 		{
-		/*
+		Argument.notNull(object);
 		Argument.notNull(modifiers);
+
+		if (object instanceof Class<?>)
+			{
+			throw new RuntimeException("CLASS");
+			}
 
 		final var clazz = Argument.notNull(object).getClass();
 
@@ -52,6 +54,7 @@ public class Reflection
 
 		for (final var field : clazz.getDeclaredFields())
 			{
+			System.out.println(field.getName());
 			if (modifiers.test(field.getModifiers()))
 				{
 				fields.put(field.getName(), field.get(object));
@@ -59,44 +62,6 @@ public class Reflection
 			}
 
 		return fields;
-		*/
-
-		// TODO: IntPredicate Bug
-		throw new NotImplementedException();
-		}
-
-	/**
-	 * @throws NullArgumentException
-	 * @throws ReflectiveOperationException
-	 * 
-	 * @since 0.10.0
-	 */
-	public static final Map<String, Object> getPublicStaticFields(final Object object) throws ReflectiveOperationException
-		{
-		return getDeclaredFields(object, PUBLIC.and(STATIC));
-
-		/*
-		Argument.notNull(object);
-
-		final var clazz = object.getClass();
-
-		final var fields = new HashMap<String, Object>();
-
-		for (final var field : clazz.getDeclaredFields())
-			{
-			final var modifiers = field.getModifiers();
-
-			if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers))
-				{
-				final var name = field.getName();
-				final var value = field.get(object);
-
-				fields.put(name, value);
-				}
-			}
-
-		return fields;
-		*/
 		}
 
 	/**
