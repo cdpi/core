@@ -16,7 +16,7 @@ import io.github.cdpi.util.Util;
 /**
  * <h1>IO</h1>
  * 
- * @version 0.11.0
+ * @version 0.12.1
  * @since 0.11.0
  */
 public class IO
@@ -36,7 +36,23 @@ public class IO
 	 */
 	public static final Path getCurrentDirectory()
 		{
-		return Paths.get(Util.EMPTY_STRING).toAbsolutePath();
+		return Paths.get(Util.EMPTY_STRING).normalize(); //.toAbsolutePath();
+		}
+
+	/**
+	 * @throws NullArgumentException
+	 * 
+	 * @since 0.12.1
+	 */
+	public static final Path removeExtension(final Path path)
+		{
+		//final Function<Path, String> filename = path -> path.getFileName().toString().replaceFirst("[.][^.]+$", "");
+
+		Argument.notNull(path);
+
+		final var filename = path.getFileName().toString().replaceFirst("[.][^.]+$", Util.EMPTY_STRING);
+
+		return path.resolveSibling(filename);
 		}
 
 	/**

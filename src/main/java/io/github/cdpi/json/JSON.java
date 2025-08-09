@@ -4,13 +4,19 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Map;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.internal.LinkedTreeMap;
 import io.github.cdpi.Argument;
 import io.github.cdpi.exceptions.NullArgumentException;
@@ -18,14 +24,23 @@ import io.github.cdpi.exceptions.NullArgumentException;
 /**
  * <h1>JSON</h1>
  * 
- * @version 0.8.0
+ * @version 0.12.1
  * @since 0.1.0
  */
 public class JSON
 	{
 	/**
-	 * @since 0.1.0
+	 * @since 0.12.1
 	 */
+	public static final Gson GSON()
+		{
+		return new GsonBuilder().setPrettyPrinting()
+			.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
+			.registerTypeAdapter(OffsetDateTime.class, new OffsetDateTimeAdapter().nullSafe())
+			.create();
+		}
+
+	@Deprecated
 	public static final <T extends Enum<?>> JsonDeserializer<T> getEnumDeserializer(final Class<T> classOfT)
 		{
 		final T[] constants = classOfT.getEnumConstants();
@@ -71,22 +86,39 @@ public class JSON
 					}
 				throw new JsonParseException("Unknown enum value: " + json);
 				*/
+
 				return null;
 				}
 			};
 		}
 
-	/**
-	 * @since 0.1.0
-	 */
+	@Deprecated
 	public static final JsonDeserializer<OffsetDateTime> getOffsetDateTimeDeserializer()
 		{
 		return new JsonDeserializer<OffsetDateTime>()
 			{
 			@Override
-			public OffsetDateTime deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
+			public OffsetDateTime deserialize(final JsonElement json, final Type type, final JsonDeserializationContext context) throws JsonParseException
 				{
 				return OffsetDateTime.parse(json.getAsString());
+				}
+			};
+		}
+
+	@Deprecated
+	public static final JsonSerializer<LocalDateTime> getLocalDateTimeSerializer()
+		{
+		return new JsonSerializer<LocalDateTime>()
+			{
+			@Override
+			public JsonElement serialize(final LocalDateTime date, final Type type, final JsonSerializationContext context)
+				{
+				if (date == null)
+					{
+					return JsonNull.INSTANCE;
+					}
+
+				return new JsonPrimitive(date.toString());
 				}
 			};
 		}

@@ -24,8 +24,10 @@ public class MimeType
 
 	public static final String TEXT_XML = join(TEXT, XML);
 
+	private static final String JOIN_TEMPLATE = "%s/%s";
+
 	private static final String join(final String left, final String right)
 		{
-		return "%s/%s".formatted(left, right);
+		return JOIN_TEMPLATE.formatted(left, right);
 		}
 	}
